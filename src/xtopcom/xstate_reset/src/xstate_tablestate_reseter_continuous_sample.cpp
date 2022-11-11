@@ -17,7 +17,7 @@ xstate_tablestate_reseter_continuous_sample::xstate_tablestate_reseter_continuou
   : xstate_tablestate_reseter_base{statectx_ptr}, m_json_parser{statectx_ptr->get_table_address(), fork_name} {
 }
 
-static const std::size_t each_reset_maximum_reset_account_num = 100;
+static const std::size_t each_reset_maximum_reset_account_num = 2;
 
 bool xstate_tablestate_reseter_continuous_sample::exec_reset_tablestate(std::size_t cnt) {
     xinfo("[exec_reset_tablestate] table %s at fork: %s, reset size: %zu", m_json_parser.table_account_str(), m_json_parser.fork_name_str(), m_json_parser.size());

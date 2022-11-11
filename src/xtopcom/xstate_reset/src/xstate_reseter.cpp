@@ -70,11 +70,11 @@ bool xstate_reseter::exec_reset() {
     /// }
 
     /// @brief Sample fork code, continues block 
-    /// if (IS_FORK_POINT_FROM("", TEST_FORK)) {
-    ///     xstate_tablestate_reseter_base_ptr reseter_ptr = top::make_unique<xstate_tablestate_reseter_continuous_sample>(m_statectx_ptr, "TEST_FORK");
-    ///     auto fork_index_properties = fork_info_contract_unit_state->string_get(std::string{data::XPROPERTY_CONTRACT_TABLE_FORK_INDEX_KEY});
-    ///     return reseter_ptr->exec_reset_tablestate(static_cast<std::size_t>(atoi(fork_index_properties.c_str())));
-    /// }
+    if (IS_FORK_POINT_FROM("", TEST_FORK)) {
+        xstate_tablestate_reseter_base_ptr reseter_ptr = top::make_unique<xstate_tablestate_reseter_continuous_sample>(m_statectx_ptr, "TEST_FORK");
+        auto fork_index_properties = fork_info_contract_unit_state->string_get(std::string{data::XPROPERTY_CONTRACT_TABLE_FORK_INDEX_KEY});
+        return reseter_ptr->exec_reset_tablestate(static_cast<std::size_t>(atoi(fork_index_properties.c_str())));
+    }
 
     /// @brief Sample fork code every fork point code should be keeped.
     /// else if (IS_FORK_POINT_FROM...) {
