@@ -64,10 +64,10 @@ bool xstate_reseter::exec_reset() {
     (chain_fork::xutility_t::is_forked(fork_points::fork_point, m_current_time_block_height) && fork_properties == from_properties)
 
     /// @brief Sample fork code, one and for all.
-    /// if (IS_FORK_POINT_FROM("", TEST_FORK)) {
-    ///     xstate_tablestate_reseter_base_ptr reseter_ptr = top::make_unique<xstate_tablestate_reseter_sample>(m_statectx_ptr, "TEST_FORK");
-    ///     return reseter_ptr->exec_reset_tablestate();
-    /// }
+    if (IS_FORK_POINT_FROM("", TEST_FORK)) {
+        xstate_tablestate_reseter_base_ptr reseter_ptr = top::make_unique<xstate_tablestate_reseter_sample>(m_statectx_ptr, "TEST_FORK");
+        return reseter_ptr->exec_reset_tablestate();
+    }
 
     /// @brief Sample fork code, continues block 
     /// if (IS_FORK_POINT_FROM("", TEST_FORK)) {
