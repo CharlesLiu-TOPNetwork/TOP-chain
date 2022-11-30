@@ -4,7 +4,8 @@
 
 #include "xstate_reset/xstate_json_parser.h"
 
-#include "xstate_reset/reset_point_data/test_fork_data.inc"
+// #include "xstate_reset/reset_point_data/test_fork_data.inc"
+#include "xstate_reset/reset_point_data/test_fork_account_state_data.inc"
 
 NS_BEG2(top, state_reset)
 
@@ -112,13 +113,13 @@ xstate_json_parser::xstate_json_parser(base::xvaccount_t const & table_account, 
     }                                                                                                                                                                              \
     }
 
-    // if (m_fork_name == "TEST_FORK") {
-    //     ADD_ONE_FORK(TEST_FORK);
+    if (m_fork_name == "TEST_FORK") {
+        ADD_ONE_FORK(TEST_FORK);
         // } else if (m_fork_name == "xxx") {
         //     ADD_ONE_FORK(xxx);
     // } else {
     //     xerror("not support this fork :%s", m_fork_name.c_str());
-    // }
+    }
 
 #undef CONCAT_SHARDING_VARIABLE_NAME
 #undef SHARDING_SWITCH_CASE_64

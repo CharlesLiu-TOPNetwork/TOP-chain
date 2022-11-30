@@ -7,8 +7,9 @@
 #include "xbasic/xmemory.hpp"
 #include "xchain_fork/xutility.h"
 #include "xdata/xnative_contract_address.h"
-#include "xstate_reset/xstate_tablestate_reseter_sample.h"
+#include "xstate_reset/xstate_tablestate_reseter_account_state_sample.h"
 #include "xstate_reset/xstate_tablestate_reseter_continuous_sample.h"
+#include "xstate_reset/xstate_tablestate_reseter_sample.h"
 #include "xstatectx/xstatectx.h"
 
 NS_BEG2(top, state_reset)
@@ -69,7 +70,12 @@ bool xstate_reseter::exec_reset() {
     ///     return reseter_ptr->exec_reset_tablestate();
     /// }
 
-    /// @brief Sample fork code, continues block 
+    if (IS_FORK_POINT_FROM("", TEST_FORK)) {
+        xstate_tablestate_reseter_base_ptr reseter_ptr = top::make_unique<xstate_tablestate_reseter_account_state_sample>(m_statectx_ptr, "TEST_FORK");
+        return reseter_ptr->exec_reset_tablestate();
+    }
+
+    /// @brief Sample fork code, continues block
     /// if (IS_FORK_POINT_FROM("", TEST_FORK)) {
     ///     xstate_tablestate_reseter_base_ptr reseter_ptr = top::make_unique<xstate_tablestate_reseter_continuous_sample>(m_statectx_ptr, "TEST_FORK");
     ///     auto fork_index_properties = fork_info_contract_unit_state->string_get(std::string{data::XPROPERTY_CONTRACT_TABLE_FORK_INDEX_KEY});
