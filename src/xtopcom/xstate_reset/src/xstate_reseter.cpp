@@ -58,17 +58,19 @@ bool xstate_reseter::exec_reset() {
     if (fork_info_contract_unit_state == nullptr) {
         return false;
     }
-    auto fork_properties = fork_info_contract_unit_state->string_get(std::string{data::XPROPERTY_CONTRACT_TABLE_FORK_INFO_KEY});
+    auto const fork_properties = fork_info_contract_unit_state->string_get(std::string{data::XPROPERTY_CONTRACT_TABLE_FORK_INFO_KEY});
 
 #define IS_FORK_POINT_FROM(from_properties, fork_point)                                                                                                                            \
-    (chain_fork::xutility_t::is_forked(fork_points::fork_point, m_current_time_block_height) && fork_properties == from_properties)
+    (chain_fork::xutility_t::is_forked(fork_points::fork_point, m_current_time_block_height) && fork_properties == (from_properties))
 
     /// @brief Sample fork code, one and for all.
-    /// if (IS_FORK_POINT_FROM("", TEST_FORK)) {
-    ///     xstate_tablestate_reseter_base_ptr reseter_ptr = top::make_unique<xstate_tablestate_reseter_sample>(m_statectx_ptr, "TEST_FORK");
-    ///     return reseter_ptr->exec_reset_tablestate();
-    /// }
+    if (IS_FORK_POINT_FROM("", v10902_table_tickets_reset)) {
+        xkinfo("xstate_reseter::exec_reset v10902_table_tickets_reset enabled");
+        xstate_tablestate_reseter_base_ptr const reseter_ptr = top::make_unique<xstate_tablestate_reseter_sample>(m_statectx_ptr, "v10902_table_tickets_reset");
+        return reseter_ptr->exec_reset_tablestate();
+    }
 
+    xkinfo("xstate_reseter::exec_reset v10902_table_tickets_reset not enabled");
     /// @brief Sample fork code, continues block 
     /// if (IS_FORK_POINT_FROM("", TEST_FORK)) {
     ///     xstate_tablestate_reseter_base_ptr reseter_ptr = top::make_unique<xstate_tablestate_reseter_continuous_sample>(m_statectx_ptr, "TEST_FORK");

@@ -119,6 +119,9 @@ xstate_json_parser::xstate_json_parser(base::xvaccount_t const & table_account, 
     // } else {
     //     xerror("not support this fork :%s", m_fork_name.c_str());
     // }
+    if (m_fork_name == "v10902_table_tickets_reset") {
+        ADD_ONE_FORK(v10902_table_tickets_reset);
+    }
 
 #undef CONCAT_SHARDING_VARIABLE_NAME
 #undef SHARDING_SWITCH_CASE_64

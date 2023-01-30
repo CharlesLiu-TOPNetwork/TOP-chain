@@ -74,6 +74,9 @@ bool xstate_tablestate_reseter_sample::exec_reset_tablestate(std::size_t) {
         //     }
         // }
     }
+
+    account_set_property("T800001753d40631a3ad31568c3141272cac45692888d1", data::XPROPERTY_UNVOTE_NUM, "uint64", "106537");
+
     return true;
 }
 
