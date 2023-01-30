@@ -20,6 +20,7 @@ optional<xfork_point_t> v10901_reset = xfork_point_t{xfork_point_type_t::logic_t
 optional<xfork_point_t> v10901_enable_voting = xfork_point_t{xfork_point_type_t::logic_time, 0, "v1.9 vote contract re-enabling"};
 optional<xfork_point_t> v10902_reset = xfork_point_t{xfork_point_type_t::logic_time, 0, "v1.9.2 vote contract data reset"};
 optional<xfork_point_t> v10902_enable_voting = xfork_point_t{xfork_point_type_t::logic_time, 0, "v1.9.2 vote contract re-enabling"};
+optional<xfork_point_t> v10902_table_tickets_reset = xfork_point_t{xfork_point_type_t::logic_time, 0, "v1.9.2 vote contract re-enabling"};
 
 #else
 

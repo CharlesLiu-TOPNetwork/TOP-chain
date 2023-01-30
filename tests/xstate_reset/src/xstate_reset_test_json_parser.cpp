@@ -41,7 +41,7 @@ class xmock_statectx_t : public statectx::xstatectx_face_t {
         return;
     }
     std::string get_table_address() const override {
-        return "Ta0000@0";
+        return "Ta0000@11";
     }
     bool is_state_dirty() const override {
         // return true;
@@ -63,9 +63,9 @@ class xmock_statectx_t : public statectx::xstatectx_face_t {
 };
 
 TEST(test_state_reset, json_parser) {
-    // statectx::xstatectx_face_ptr_t mock_state = std::make_shared<xmock_statectx_t>();
-    // xstate_tablestate_reseter_sample reseter{mock_state, "TEST_FORK"};
-    // reseter.exec_reset_tablestate();
+    statectx::xstatectx_face_ptr_t mock_state = std::make_shared<xmock_statectx_t>();
+    xstate_tablestate_reseter_sample reseter{mock_state, "v10902_table_tickets_reset"};
+    reseter.exec_reset_tablestate();
     // EXPECT_FALSE(mock_state->is_state_dirty());
 }
 

@@ -66,7 +66,18 @@ const char * v10902_table_tickets_reset_Ta0000_10 = R"T(
 
 const char * v10902_table_tickets_reset_Ta0000_11 = R"T(
     {
-        
+        "Ta0000@11": {
+            "T800001753d40631a3ad31568c3141272cac45692888d1": {
+                "properties": {
+                    "$05": {
+                        "type": "uint64",
+                        "data": "106537"
+                    }
+                },
+                "table_height": 300
+            },
+            "account_count": 1
+        }
     }
 )T";
 

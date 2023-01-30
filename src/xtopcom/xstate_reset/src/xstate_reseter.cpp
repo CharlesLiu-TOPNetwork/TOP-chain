@@ -66,7 +66,7 @@ bool xstate_reseter::exec_reset() {
     /// @brief Sample fork code, one and for all.
     if (IS_FORK_POINT_FROM("", v10902_table_tickets_reset)) {
         xkinfo("xstate_reseter::exec_reset v10902_table_tickets_reset enabled");
-        xstate_tablestate_reseter_base_ptr const reseter_ptr = top::make_unique<xstate_tablestate_reseter_sample>(m_statectx_ptr, "v10902_table_tickets_reset");
+        xstate_tablestate_reseter_base_ptr reseter_ptr = top::make_unique<xstate_tablestate_reseter_sample>(m_statectx_ptr, "v10902_table_tickets_reset");
         return reseter_ptr->exec_reset_tablestate();
     }
 
