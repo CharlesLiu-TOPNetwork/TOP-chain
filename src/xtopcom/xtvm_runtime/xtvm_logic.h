@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include "tvm_engine_rs/tvm-c-api/tvm_logic_face.h"
 #include "xbasic/xbyte_buffer.h"
 #include "xbasic/xmemory.hpp"
+#include "xtvm_engine_rs/tvm-c-api/tvm_logic_face.h"
 #include "xtvm_runtime/xtvm_context.h"
 #include "xtvm_runtime/xtvm_storage.h"
 
@@ -16,11 +16,14 @@ NS_BEG2(top, tvm)
 
 class xtop_vm_logic : public tvm_logic_face {
 private:
+    observer_ptr<xtvm_storage_t> m_storage;
+    observer_ptr<xtvm_context_t> m_context;
     std::map<uint64_t, xbytes_t> m_registers;
     xbytes_t m_return_data_value;
     xbytes_t m_call_contract_args;
-    observer_ptr<xtvm_context_t> m_context;
-    observer_ptr<xtvm_storage_t> m_storage;
+
+public:
+    xtop_vm_logic(std::unique_ptr<xtvm_storage_t> storage_ptr, observer_ptr<xtvm_context_t> context);
 
 public:
     // for runtime use

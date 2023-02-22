@@ -30,6 +30,10 @@ void write_memory(uint64_t offset, xbytes_t const & buffer) {
 
 NS_END1
 
+xtop_vm_logic::xtop_vm_logic(std::unique_ptr<xtvm_storage_t> storage_ptr, observer_ptr<xtvm_context_t> context) : m_storage{std::move(storage_ptr)}, m_context{context} {
+    xdbg("tvm logic instance %p", static_cast<void *>(this));
+}
+
 void xtop_vm_logic::read_register(uint64_t register_id, uint64_t ptr) {
     auto data = m_registers.at(register_id);
     register_tools::write_memory(ptr, data);
@@ -115,7 +119,8 @@ uint64_t xtop_vm_logic::chain_id() {
 void xtop_vm_logic::log_utf8(uint64_t len, uint64_t ptr) {
     auto logs_bytes = xbytes_t(len);
     register_tools::read_memory(ptr, logs_bytes);
-    // todo!
+    std::string logs_str = top::to_string(logs_bytes);
+    xinfo("[log_utf8] TVM_LOG: %s", logs_str.c_str());
 }
 
 NS_END2
