@@ -34,6 +34,10 @@ xtop_vm_logic::xtop_vm_logic(std::unique_ptr<xtvm_storage_t> storage_ptr, observ
     xdbg("tvm logic instance %p", static_cast<void *>(this));
 }
 
+xbytes_t xtop_vm_logic::get_return_value() const {
+    return m_return_data_value;
+}
+
 void xtop_vm_logic::read_register(uint64_t register_id, uint64_t ptr) {
     auto data = m_registers.at(register_id);
     register_tools::write_memory(ptr, data);

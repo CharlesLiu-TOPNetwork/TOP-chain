@@ -38,10 +38,6 @@ public:
 
 public:
     txexecutor::enum_execute_result_type execute(txexecutor::xvm_input_t const & input, txexecutor::xvm_output_t & output) override;
-
-#if defined(XENABLE_TESTS)
-public:
-#endif
     evm_common::xevm_transaction_result_t execute_action(std::unique_ptr<data::xbasic_top_action_t const> action, txexecutor::xvm_para_t const & vm_para);
 };
 using xtvm_t = xtop_vm;

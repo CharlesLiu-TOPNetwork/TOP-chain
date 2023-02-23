@@ -44,11 +44,12 @@ private:
         xbytes_t m_storage_key;  // optional
         bool m_has_optional_storage_key{false};
 
-    public:
-        xtop_vm_storage_key();
-        // construct from key bytes
-        xtop_vm_storage_key(xbytes_t const & storage_key);
+    private:
+        // can only be constructed from method `decode_storage_key`
+        xtop_vm_storage_key() {
+        }
 
+    public:
         inline storage_key_prefix key_type() const {
             return m_key_type;
         }

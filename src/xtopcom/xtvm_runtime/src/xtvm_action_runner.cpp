@@ -9,6 +9,7 @@
 #include "xcontract_runtime/xerror/xerror.h"
 #include "xtvm_engine_rs/tvm-c-api/tvm_engine_interface.h"
 #include "xtvm_engine_rs/tvm-c-api/tvm_import_instance.h"
+#include "xtvm_runtime/xerror.h"
 #include "xtvm_runtime/xtvm_logic.h"
 #include "xtvm_runtime/xtvm_storage.h"
 
@@ -37,7 +38,7 @@ evm_common::xevm_transaction_result_t xtop_vm_action_runner::execute_action(std:
     auto ret = return_result.ParseFromString(top::to_string(return_result_bytes));
 
     if (!ret) {
-        top::error::throw_error(top::contract_runtime::error::xerrc_t::evm_protobuf_serilized_error);
+        top::error::throw_error(top::tvm::error::xerrc_t::protobuf_serilized_error);
     }
     result.set_status(return_result.status());
     result.extra_msg = top::to_hex_prefixed(return_result.status_data());
