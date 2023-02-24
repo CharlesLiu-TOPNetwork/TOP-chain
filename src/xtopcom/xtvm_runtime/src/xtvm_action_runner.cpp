@@ -22,7 +22,7 @@ evm_common::xevm_transaction_result_t xtop_vm_action_runner::execute_action(std:
     evm_common::xevm_transaction_result_t result;
 
     auto storage = top::make_unique<xtvm_storage_t>(m_statectx);
-    std::shared_ptr<xtvm_logic_t> logic_ptr = std::make_shared<xtvm_logic_t>(std::move(storage), top::make_observer(context.get()));
+    std::shared_ptr<xtvm_logic_t> logic_ptr = std::make_shared<xtvm_logic_t>(top::make_observer(storage.get()), top::make_observer(context.get()));
 
     tvm_import_instance::instance()->add_logic(logic_ptr);
 

@@ -79,10 +79,11 @@ protected:
         xtvm_storage_key_t result;
         assert(storage_key.at(0) == 1);  // VERSION::V1 = 0x01 as u8;
         result.m_key_type = static_cast<storage_key_prefix>(storage_key.at(1));
-        result.m_address_bytes.reserve(20);
+        result.m_address_bytes.resize(20, xbyte_t{0});
         std::copy(storage_key.begin() + 2, storage_key.begin() + 22, result.m_address_bytes.begin());
         if (storage_key.size() == 54) {
             result.m_has_optional_storage_key = true;
+            result.m_storage_key.resize(32, xbyte_t{0});
             std::copy(storage_key.begin() + 22, storage_key.end(), result.m_storage_key.begin());
         }
         return result;

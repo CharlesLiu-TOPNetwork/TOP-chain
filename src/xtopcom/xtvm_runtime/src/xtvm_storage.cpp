@@ -16,7 +16,7 @@ const state_accessor::properties::xproperty_type_t tvm_property_type_map = state
 
 // todo ! should `data::XPROPERTY_EVM_CODE` && `data::XPROPERTY_EVM_STORAGE` use new property name.
 xbytes_t xtop_vm_storage::storage_get(xbytes_t const & key) {
-    assert(!m_statectx);
+    assert(m_statectx);
 
     auto storage_key = decode_storage_key(key);
     auto address = common::xaccount_address_t{storage_key.t8_address()};
@@ -56,6 +56,11 @@ xbytes_t xtop_vm_storage::storage_get(xbytes_t const & key) {
             return value;
         }
         case storage_key_prefix::Storage: {
+            if (!storage_key.has_storage_key()) {
+                // remove all storage, but read first
+                // just return;
+                return xbytes_t{};
+            }
             assert(storage_key.has_storage_key());
             auto property = state_accessor::properties::xtypeless_property_identifier_t{data::XPROPERTY_EVM_STORAGE, state_accessor::properties::xproperty_category_t::system};
             auto value = sa.get_property_cell_value<tvm_property_type_map>(property, storage_key.storage_key(), ec);
@@ -81,7 +86,7 @@ xbytes_t xtop_vm_storage::storage_get(xbytes_t const & key) {
     return xbytes_t{};
 }
 void xtop_vm_storage::storage_set(xbytes_t const & key, xbytes_t const & value) {
-    assert(!m_statectx);
+    assert(m_statectx);
 
     auto storage_key = decode_storage_key(key);
     auto address = common::xaccount_address_t{storage_key.t8_address()};
@@ -143,7 +148,7 @@ void xtop_vm_storage::storage_set(xbytes_t const & key, xbytes_t const & value) 
     }
 }
 void xtop_vm_storage::storage_remove(xbytes_t const & key) {
-    assert(!m_statectx);
+    assert(m_statectx);
 
     auto storage_key = decode_storage_key(key);
     auto address = common::xaccount_address_t{storage_key.t8_address()};
@@ -192,6 +197,9 @@ void xtop_vm_storage::storage_remove(xbytes_t const & key) {
                     state_accessor::properties::xtypeless_property_identifier_t{data::XPROPERTY_EVM_STORAGE, state_accessor::properties::xproperty_category_t::system};
                 auto property = state_accessor::properties::xproperty_identifier_t{typeless_property, tvm_property_type_map};
                 sa.clear_property(property, ec);
+                if (ec == static_cast<std::error_code>(state_accessor::error::xerrc_t::property_not_exist)) {
+                    ec.clear();
+                }
                 xdbg("tvm_storage remove address %s all storage", address.to_string().c_str());
             }
             assert(!ec);

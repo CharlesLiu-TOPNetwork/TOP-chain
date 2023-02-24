@@ -30,7 +30,7 @@ void write_memory(uint64_t offset, xbytes_t const & buffer) {
 
 NS_END1
 
-xtop_vm_logic::xtop_vm_logic(std::unique_ptr<xtvm_storage_t> storage_ptr, observer_ptr<xtvm_context_t> context) : m_storage{std::move(storage_ptr)}, m_context{context} {
+xtop_vm_logic::xtop_vm_logic(observer_ptr<xtvm_storage_t> storage_ptr, observer_ptr<xtvm_context_t> context) : m_storage{storage_ptr}, m_context{context} {
     xdbg("tvm logic instance %p", static_cast<void *>(this));
 }
 
@@ -46,7 +46,7 @@ uint64_t xtop_vm_logic::register_len(uint64_t register_id) {
     return m_registers.at(register_id).size();
 }
 void xtop_vm_logic::input(uint64_t register_id) {
-    m_registers.at(register_id) = m_context->input_data();
+    m_registers[register_id] = m_context->input_data();
 }
 void xtop_vm_logic::result(uint64_t value_len, uint64_t value_ptr) {
     m_return_data_value.reserve(value_len);

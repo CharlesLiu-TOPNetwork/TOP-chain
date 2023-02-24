@@ -23,7 +23,7 @@ private:
     xbytes_t m_call_contract_args;
 
 public:
-    xtop_vm_logic(std::unique_ptr<xtvm_storage_t> storage_ptr, observer_ptr<xtvm_context_t> context);
+    xtop_vm_logic(observer_ptr<xtvm_storage_t> storage_ptr, observer_ptr<xtvm_context_t> context);
 
 public:
     // for runtime use

@@ -4,6 +4,7 @@
 
 #include "xtvm_runtime/xtvm_context.h"
 
+#include "xbasic/xhex.h"
 #include "xdata/xconsensus_action.h"
 // xtvm_engine_rs/tvm-c-api/
 #include "protobuf_types/pbasic.pb.h"
@@ -21,7 +22,7 @@ xtop_vm_context::xtop_vm_context(std::unique_ptr<data::xbasic_top_action_t const
     auto gas_limit = static_cast<data::xevm_consensus_action_t const *>(m_action.get())->gas_limit();
 
     // action_type:
-    // we don't really need to sense this, should also be deleted in `action` 
+    // we don't really need to sense this, should also be deleted in `action`
     // m_action_type = static_cast<data::xevm_consensus_action_t const *>(m_action.get())->evm_action_type();
 
     // todo! gas price
@@ -51,9 +52,9 @@ xtop_vm_context::xtop_vm_context(std::unique_ptr<data::xbasic_top_action_t const
     call_args.set_gas_limit(gas_limit);
     call_args.set_input(top::to_string(static_cast<data::xevm_consensus_action_t const *>(m_action.get())->data()));
     auto sender_address = call_args.mutable_sender_address();
-    sender_address->set_value(top::to_string(top::to_bytes(m_sender.to_string().substr(6))));
+    sender_address->set_value(top::to_string(top::from_hex(m_sender.to_string().substr(6))));
     auto recver_address = call_args.mutable_recver_address();
-    recver_address->set_value(top::to_string(top::to_bytes(m_recver.to_string().substr(6))));
+    recver_address->set_value(top::to_string(top::from_hex(m_recver.to_string().substr(6))));
     evm_common::u256 value_u256 = static_cast<data::xevm_consensus_action_t const *>(m_action.get())->value();  // utop , should not bigger than U256
     uint64_t value_u64 = value_u256.convert_to<uint64_t>();
     call_args.set_value(value_u64);
