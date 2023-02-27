@@ -191,7 +191,11 @@ void xtop_vm_storage::storage_remove(xbytes_t const & key) {
             if (storage_key.has_storage_key()) {
                 auto property = state_accessor::properties::xtypeless_property_identifier_t{data::XPROPERTY_EVM_STORAGE, state_accessor::properties::xproperty_category_t::system};
                 sa.remove_property_cell<tvm_property_type_map>(property, storage_key.storage_key(), ec);
-                xdbg("tvm_storage remove address %s storage:%s", address.to_string().c_str(), storage_key.storage_key().c_str());
+                if (ec == static_cast<std::error_code>(state_accessor::error::xerrc_t::property_key_not_exist) ||
+                    ec == static_cast<std::error_code>(state_accessor::error::xerrc_t::property_not_exist)) {
+                    ec.clear();  // Is possible that key not exist when deploying contract, since evm will always try to remove zero value.
+                }
+                xdbg("tvm_storage remove address %s storage:%s", address.to_string().c_str(), top::to_hex(storage_key.storage_key()).c_str());
             } else {
                 auto typeless_property =
                     state_accessor::properties::xtypeless_property_identifier_t{data::XPROPERTY_EVM_STORAGE, state_accessor::properties::xproperty_category_t::system};

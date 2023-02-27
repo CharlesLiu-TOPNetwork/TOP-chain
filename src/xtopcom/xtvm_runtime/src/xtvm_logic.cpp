@@ -49,7 +49,7 @@ void xtop_vm_logic::input(uint64_t register_id) {
     m_registers[register_id] = m_context->input_data();
 }
 void xtop_vm_logic::result(uint64_t value_len, uint64_t value_ptr) {
-    m_return_data_value.reserve(value_len);
+    m_return_data_value.resize(value_len, 0);
     register_tools::read_memory(value_ptr, m_return_data_value);
 }
 uint64_t xtop_vm_logic::storage_write(uint64_t key_len, uint64_t key_ptr, uint64_t value_len, uint64_t value_ptr, uint64_t register_id) {
